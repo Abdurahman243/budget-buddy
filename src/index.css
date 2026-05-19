@@ -1,0 +1,330 @@
+:root {
+  --primary: #ff9f43;
+  /* Warm vibrant orange */
+  --success: #1b8a4d;
+  /* Emerald green */
+  --danger: #b32d2d;
+  /* Soft red */
+  --glass: rgba(255, 255, 255, 0.7);
+  /* Dark carbon glass */
+  --accent: #e67e22;
+  /* Deep burnt orange */
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  /* Warm Dark Gradient */
+  background: linear-gradient(135deg, #565138 0%, #655742 100%);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: #2d3436;
+}
+
+#balance {
+  font-family: 'Courier New', monospace;
+  /* Looks like a digital bank display */
+  font-size: 26px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+  letter-spacing: 2px;
+  margin: 0;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 100%;
+}
+
+#balance,
+.money.plus,
+.money.minus {
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 100%;
+  display: block;
+  padding-bottom: 5px;
+  /* Gives room for the scrollbar so it doesn't cover text */
+}
+
+#balance::-webkit-scrollbar,
+.money.plus::-webkit-scrollbar,
+.money.minus::-webkit-scrollbar {
+  height: 4px;
+  /* Thin scrollbar */
+}
+
+#balance::-webkit-scrollbar-thumb,
+.money.plus::-webkit-scrollbar-thumb,
+.money.minus::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  /* Soft dark scroll handle */
+  border-radius: 10px;
+}
+
+.main-title {
+  position: absolute;
+  top: -30px;
+  font-size: 3rem;
+  color: white;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  width: 1100px;
+  margin-top: 80px;
+}
+
+.main-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  gap: 20px;
+}
+
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(15px);
+  border-radius: 24px;
+  padding: 25px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  border: 1px solid rgba(255, 159, 67, 0.2);
+  /* Subtle orange glow border */
+
+  width: 340px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+
+  /* This forces the list to stay inside the glass box */
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 5px;
+  /* Space for scrollbar */
+}
+
+/* History Centered */
+.column-right {
+  position: relative;
+  width: 400px;
+  overflow-y: auto;
+}
+
+.column-left,
+.column-middle {
+  width: 320px;
+}
+
+/* Table Styling */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  padding: 10px 0;
+  border-bottom: 2px solid #000000;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100% !important;
+  /* Force full width */
+  padding: 18px 12px;
+  /* Tighten side padding to give numbers room */
+  box-sizing: border-box;
+  gap: 10px;
+  /* Space between text and number */
+  overflow: visible !important;
+  max-width: 100%;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  /* Gives each item its own background card */
+  border-radius: 8px;
+  overflow-x: auto !important;
+}
+
+.list li::-webkit-scrollbar {
+  height: 4px;
+}
+
+.list li::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.list li span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list li p,
+.list li {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list li span {
+  flex-shrink: 0;
+  /* THE FIX: Prevents the number from squishing */
+  text-align: right;
+  font-weight: 700;
+  display: inline-block;
+  min-width: fit-content;
+  /* Let the box grow as wide as the number needs */
+  white-space: nowrap;
+  /* Keeps the $ and .00 on one single line */
+}
+
+.inc-exp-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 15px;
+  /* Adds space between the two boxes */
+}
+
+.inc-exp-container>div {
+  flex: 1;
+  padding: 15px 0;
+  /* Removed side padding to align perfectly with the edge */
+  text-align: left;
+  /* THE FIX: Changes text from center to left */
+  overflow: visible;
+  width: 100%;
+  /* Ensures they stretch across the space if needed */
+  margin-top: 20px;
+}
+
+.list li:hover {
+  transform: scale(1.02);
+}
+
+.list li.plus {
+  border-left: 5px solid var(--success);
+}
+
+.list li.minus {
+  border-left: 5px solid var(--danger);
+}
+
+/* Inputs & Buttons */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background: #ffffff;
+  color: #333;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #1a1a1a;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #ff7675;
+  /* Soft red color to match */
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 5px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.delete-btn:hover {
+  color: var(--danger);
+  /* Deepens the red on hover */
+  transform: scale(1.3);
+  /* Pops out slightly without a background box */
+}
+
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 159, 67, 0.4);
+}
+
+#clear-btn {
+  background: none;
+  border: 1px solid #ff7675;
+  color: red;
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#clear-btn:hover {
+  color: #fff;
+  /* Turns text white so it reads well on red */
+  background-color: #C2131E;
+  /* Red accent background fill */
+  transform: translateY(-3px) scale(1.05);
+  /* Lifts up and grows slightly (pops) */
+  box-shadow: 0 4px 10px rgba(255, 118, 117, 0.4);
+  /* Soft red accent glow */
+}
+
+#money-plus,
+#money-minus {
+  font-size: 1.1rem;
+  word-break: break-word;
+  /* If the number is massive, it will wrap instead of breaking the box */
+  display: block;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.money.plus {
+  color: var(--success);
+}
+
+.money.minus {
+  color: var(--danger);
+}
