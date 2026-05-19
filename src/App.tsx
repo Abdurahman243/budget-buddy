@@ -39,7 +39,7 @@ const App: React.FC = () => {
     };
 
     const clearAll = () => {
-        if (confirm("clear all history")) setTransaction([]);
+        if (confirm("clear all history?")) setTransaction([]);
     };
 
     const amounts = transactions.map(t => t.amount);
