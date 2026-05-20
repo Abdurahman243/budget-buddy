@@ -18,9 +18,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  /* Changed from center to start to allow scrolling */
   overflow-y: auto;
-  /* FIXED: Allows scrolling */
   color: #2d3436;
   padding-bottom: 50px;
 }
@@ -45,7 +43,6 @@ body {
 .main-layout {
   display: flex;
   flex-direction: column;
-  /* Stacks columns vertically */
   gap: 20px;
   width: 100%;
 }
@@ -60,7 +57,6 @@ body {
   border: 1px solid rgba(255, 159, 67, 0.2);
   width: 100%;
   min-height: 300px;
-  /* Minimum height, but will grow */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -80,15 +76,36 @@ body {
   }
 }
 
-/* --- Components inside Glass --- */
+/* --- History List Scroll Container --- */
 .list {
   list-style-type: none;
   padding: 0;
   margin-top: 10px;
   flex: 1;
   overflow-y: auto;
+  /* Handles long stack vertical scrolling smoothly */
 }
 
+/* Clean Custom Vertical List Scrollbar */
+.list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* --- Row Layout Inside History --- */
 .list li {
   display: flex;
   justify-content: space-between;
@@ -98,6 +115,7 @@ body {
   background: rgba(255, 255, 255, 0.4);
   border-radius: 8px;
   border-left: 5px solid transparent;
+  gap: 12px;
 }
 
 .list li.plus {
@@ -108,13 +126,89 @@ body {
   border-left-color: var(--danger);
 }
 
-/* --- Balance & Inputs --- */
+/* Individual Row Text Scroll Safeguards */
+.list li .tx-text {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.list li .tx-amount {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 50%;
+  /* Prevents numbers from taking more than half the row */
+  flex-shrink: 0;
+  /* Prevents the number and delete button from being squished away */
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 2px;
+}
+
+/* Micro Row Horizontal Scrollbars */
+.list li .tx-text::-webkit-scrollbar,
+.list li .tx-amount::-webkit-scrollbar {
+  height: 5px;
+}
+
+.list li .tx-text::-webkit-scrollbar-thumb,
+.list li .tx-amount::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.list li .tx-text::-webkit-scrollbar-thumb:hover,
+.list li .tx-amount::-webkit-scrollbar-thumb:hover {
+  background-color: #4A4A4A;
+}
+
+/* --- Balance & Big Number Handling --- */
 #balance {
   font-size: 24px;
   font-weight: bold;
   margin: 10px 0;
+  white-space: nowrap;
+  overflow-x: auto;
+  /* Adds scrolling directly to total balance if digits go crazy */
+  width: 100%;
+  padding-bottom: 4px;
 }
 
+.money.plus,
+.money.minus {
+  white-space: nowrap;
+  overflow-x: auto;
+  /* Adds scrolling to extreme context values */
+  max-width: 100%;
+  padding-bottom: 4px;
+}
+
+/* Main Display Global Scrollbars styling */
+#balance::-webkit-scrollbar,
+.money.plus::-webkit-scrollbar,
+.money.minus::-webkit-scrollbar {
+  height: 5px;
+}
+
+#balance::-webkit-scrollbar-thumb,
+.money.plus::-webkit-scrollbar-thumb,
+.money.minus::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#balance::-webkit-scrollbar-thumb:hover,
+.money.plus::-webkit-scrollbar-thumb:hover,
+.money.minus::-webkit-scrollbar-thumb:hover {
+  background-color: #4A4A4A;
+}
+
+/* --- Inputs & General Forms --- */
 input {
   width: 100%;
   padding: 10px;
@@ -140,19 +234,17 @@ input {
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  padding: 0 8px;
-  /* Smooth transition for hover */
-  transition: all 0.2s ease;
+  border-radius: 6px;
+  padding: 0 4px;
+  transition: all 0.3s ease;
 }
 
 .delete-btn:hover {
-  color: var(--danger);
-  transform: scale(1.4);
-  /* Bigger pop for the small 'x' button */
-  filter: brightness(1.2);
+  background-color: var(--danger);
+  /* Simply shifts color, no movement, no scaling */
+  color: white;
 }
 
-/* Money colors */
 .money.plus {
   color: var(--success);
 }
@@ -169,7 +261,6 @@ input {
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
-  /* Smooth transition for hover */
   transition: all 0.3s ease;
 }
 
@@ -177,6 +268,5 @@ input {
   background-color: var(--danger);
   color: white;
   transform: scale(1.1);
-  /* The "Pop" effect */
   box-shadow: 0 4px 10px rgba(179, 45, 45, 0.3);
 }

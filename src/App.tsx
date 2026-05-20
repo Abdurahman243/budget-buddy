@@ -10,7 +10,7 @@ const App: React.FC = () => {
     const [transactions, setTransaction] = useState<Transaction[]>(() => {
         const saved = localStorage.getItem("transactions");
         return saved ? JSON.parse(saved) : [];
-    })
+    });
 
     const [text, setText] = useState("");
     const [amount, setAmount] = useState("");
@@ -32,7 +32,7 @@ const App: React.FC = () => {
         setTransaction([...transactions, newTransaction]);
         setAmount("");
         setText("");
-    }
+    };
 
     const removeTransaction = (id: number) => {
         setTransaction(transactions.filter(t => t.id !== id));
@@ -43,7 +43,13 @@ const App: React.FC = () => {
     };
 
     const amounts = transactions.map(t => t.amount);
-    const total = amounts.reduce((acc, item) => (acc += item), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    // 1. Keep the raw numeric total to calculate the sign
+    const rawTotal = amounts.reduce((acc, item) => (acc += item), 0);
+
+    // 2. Format the absolute value so we don't accidentally get double minus signs (--$50)
+    const total = Math.abs(rawTotal).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
     const income = amounts.filter(i => i > 0).reduce((acc, i) => (acc += i), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const expense = Math.abs(amounts.filter(i => i < 0).reduce((acc, i) => (acc += i), 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -56,7 +62,7 @@ const App: React.FC = () => {
                 <div className="column-left glass">
                     <h3>New Entry</h3>
                     <form onSubmit={addTransaction}>
-                        <div className="from-control">
+                        <div className="form-control">
                             <label>Description</label>
                             <input
                                 type="text"
@@ -82,7 +88,10 @@ const App: React.FC = () => {
                 <div className="column-middle glass">
                     <div className="balance-container">
                         <small>TOTAL BALANCE</small>
-                        <h1 id="balance">${total}</h1>
+                        {/* 3. Checks rawTotal to append + or - sign dynamically */}
+                        <h1 id="balance">
+                            {rawTotal > 0 ? '+' : rawTotal < 0 ? '-' : ''}${total}
+                        </h1>
                     </div>
                     <div className="inc-exp-container">
                         <div className="inc-box">
@@ -105,10 +114,10 @@ const App: React.FC = () => {
                     <ul className="list">
                         {transactions.map(t => (
                             <li key={t.id} className={t.amount < 0 ? 'minus' : 'plus'}>
-                                {t.text}
-                                <span>
+                                <span className="tx-text">{t.text}</span>
+                                <span className="tx-amount">
                                     {t.amount < 0 ? '-' : '+'}${Math.abs(t.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                                    <button onClick={() => removeTransaction(t.id)} className="delete-btn" style={{ marginLeft: 7, }}>x</button>
+                                    <button onClick={() => removeTransaction(t.id)} className="delete-btn">x</button>
                                 </span>
                             </li>
                         ))}
@@ -118,6 +127,5 @@ const App: React.FC = () => {
         </div>
     );
 };
-
 
 export default App;
