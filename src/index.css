@@ -204,9 +204,12 @@ body {
 .money.minus::-webkit-scrollbar-thumb,
 .list li .tx-text::-webkit-scrollbar-thumb,
 .list li .tx-amount::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 10px;
   cursor: pointer;
+
+  background-clip: padding-box;
+  border: 0px solid transparent;
 }
 
 #balance::-webkit-scrollbar-thumb:hover,
