@@ -126,6 +126,33 @@ body {
   border-left-color: var(--danger);
 }
 
+/* --- Global Scrollbar Override (Hides native bars but keeps scrolling) --- */
+.list,
+#balance,
+.money.plus,
+.money.minus,
+.list li .tx-text,
+.list li .tx-amount {
+  /* Hides standard scrollbars in Firefox and IE/Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* Critical for mobile touch scrolling */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hides default WebKit scrollbars completely so they never pop up or get big */
+.list::-webkit-scrollbar,
+#balance::-webkit-scrollbar,
+.money.plus::-webkit-scrollbar,
+.money.minus::-webkit-scrollbar,
+.list li .tx-text::-webkit-scrollbar,
+.list li .tx-amount::-webkit-scrollbar {
+  display: none;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
 /* Individual Row Text Scroll Safeguards */
 .list li .tx-text {
   flex: 1;
@@ -139,7 +166,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  max-width: 50%;
+  max-width: 45%;
   /* Prevents numbers from taking more than half the row */
   flex-shrink: 0;
   /* Prevents the number and delete button from being squished away */
