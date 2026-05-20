@@ -83,7 +83,7 @@ body {
   margin-top: 10px;
   flex: 1;
   overflow-y: auto;
-  /* Handles long stack vertical scrolling smoothly */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Clean Custom Vertical List Scrollbar */
@@ -126,40 +126,14 @@ body {
   border-left-color: var(--danger);
 }
 
-/* --- Global Scrollbar Override (Hides native bars but keeps scrolling) --- */
-.list,
-#balance,
-.money.plus,
-.money.minus,
-.list li .tx-text,
-.list li .tx-amount {
-  /* Hides standard scrollbars in Firefox and IE/Edge */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  /* Critical for mobile touch scrolling */
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Hides default WebKit scrollbars completely so they never pop up or get big */
-.list::-webkit-scrollbar,
-#balance::-webkit-scrollbar,
-.money.plus::-webkit-scrollbar,
-.money.minus::-webkit-scrollbar,
-.list li .tx-text::-webkit-scrollbar,
-.list li .tx-amount::-webkit-scrollbar {
-  display: none;
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
-}
-
 /* Individual Row Text Scroll Safeguards */
 .list li .tx-text {
   flex: 1;
   min-width: 0;
   white-space: nowrap;
   overflow-x: auto;
-  padding-bottom: 2px;
+  padding-bottom: 6px;
+  /* Space for horizontal scrollbar */
 }
 
 .list li .tx-amount {
@@ -167,30 +141,12 @@ body {
   align-items: center;
   gap: 8px;
   max-width: 45%;
-  /* Prevents numbers from taking more than half the row */
+  /* Limits amount width to protect text space */
   flex-shrink: 0;
-  /* Prevents the number and delete button from being squished away */
   overflow-x: auto;
   white-space: nowrap;
-  padding-bottom: 2px;
-}
-
-/* Micro Row Horizontal Scrollbars */
-.list li .tx-text::-webkit-scrollbar,
-.list li .tx-amount::-webkit-scrollbar {
-  height: 5px;
-}
-
-.list li .tx-text::-webkit-scrollbar-thumb,
-.list li .tx-amount::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.list li .tx-text::-webkit-scrollbar-thumb:hover,
-.list li .tx-amount::-webkit-scrollbar-thumb:hover {
-  background-color: #4A4A4A;
+  padding-bottom: 6px;
+  /* Space for horizontal scrollbar */
 }
 
 /* --- Balance & Big Number Handling --- */
@@ -200,39 +156,66 @@ body {
   margin: 10px 0;
   white-space: nowrap;
   overflow-x: auto;
-  /* Adds scrolling directly to total balance if digits go crazy */
   width: 100%;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 }
 
 .money.plus,
 .money.minus {
   white-space: nowrap;
   overflow-x: auto;
-  /* Adds scrolling to extreme context values */
   max-width: 100%;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 }
 
-/* Main Display Global Scrollbars styling */
+/* Cross-Browser Thin Scrollbars Settings */
+#balance,
+.money.plus,
+.money.minus,
+.list li .tx-text,
+.list li .tx-amount {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0.05);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- Draggable Global Horizontal Scrollbars Settings --- */
 #balance::-webkit-scrollbar,
 .money.plus::-webkit-scrollbar,
-.money.minus::-webkit-scrollbar {
-  height: 5px;
+.money.minus::-webkit-scrollbar,
+.list li .tx-text::-webkit-scrollbar,
+.list li .tx-amount::-webkit-scrollbar {
+  display: block !important;
+  height: 4px !important;
+  /* Ultra thin track height */
+}
+
+#balance::-webkit-scrollbar-track,
+.money.plus::-webkit-scrollbar-track,
+.money.minus::-webkit-scrollbar-track,
+.list li .tx-text::-webkit-scrollbar-track,
+.list li .tx-amount::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
 }
 
 #balance::-webkit-scrollbar-thumb,
 .money.plus::-webkit-scrollbar-thumb,
-.money.minus::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+.money.minus::-webkit-scrollbar-thumb,
+.list li .tx-text::-webkit-scrollbar-thumb,
+.list li .tx-amount::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   cursor: pointer;
 }
 
 #balance::-webkit-scrollbar-thumb:hover,
 .money.plus::-webkit-scrollbar-thumb:hover,
-.money.minus::-webkit-scrollbar-thumb:hover {
-  background-color: #4A4A4A;
+.money.minus::-webkit-scrollbar-thumb:hover,
+.list li .tx-text::-webkit-scrollbar-thumb:hover,
+.list li .tx-amount::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary);
+  /* Highlight color on hover/drag */
 }
 
 /* --- Inputs & General Forms --- */
@@ -264,11 +247,11 @@ input {
   border-radius: 6px;
   padding: 0 4px;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .delete-btn:hover {
   background-color: var(--danger);
-  /* Simply shifts color, no movement, no scaling */
   color: white;
 }
 
