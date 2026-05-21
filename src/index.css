@@ -133,7 +133,6 @@ body {
   white-space: nowrap;
   overflow-x: auto;
   padding-bottom: 6px;
-  /* Space for horizontal scrollbar */
 }
 
 .list li .tx-amount {
@@ -141,12 +140,10 @@ body {
   align-items: center;
   gap: 8px;
   max-width: 45%;
-  /* Limits amount width to protect text space */
   flex-shrink: 0;
   overflow-x: auto;
   white-space: nowrap;
   padding-bottom: 6px;
-  /* Space for horizontal scrollbar */
 }
 
 /* --- Balance & Big Number Handling --- */
@@ -187,7 +184,6 @@ body {
 .list li .tx-amount::-webkit-scrollbar {
   display: block !important;
   height: 4px !important;
-  /* Ultra thin track height */
 }
 
 #balance::-webkit-scrollbar-track,
@@ -218,7 +214,6 @@ body {
 .list li .tx-text::-webkit-scrollbar-thumb:hover,
 .list li .tx-amount::-webkit-scrollbar-thumb:hover {
   background-color: var(--primary);
-  /* Highlight color on hover/drag */
 }
 
 /* --- Inputs & General Forms --- */

@@ -44,10 +44,9 @@ const App: React.FC = () => {
 
     const amounts = transactions.map(t => t.amount);
 
-    // 1. Keep the raw numeric total to calculate the sign
     const rawTotal = amounts.reduce((acc, item) => (acc += item), 0);
 
-    // 2. Format the absolute value so we don't accidentally get double minus signs (--$50)
+
     const total = Math.abs(rawTotal).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
     const income = amounts.filter(i => i > 0).reduce((acc, i) => (acc += i), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
