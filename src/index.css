@@ -47,6 +47,19 @@ body {
   width: 100%;
 }
 
+.main-title {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--primary);
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+  /* THIS SHIFTS ONLY THE TITLE UPWARDS */
+  margin-top: -25px;
+  /* Pulls the title up closer to the top browser edge */
+  margin-bottom: 45px;
+  /* Keeps a healthy, clean gap between title and cards */
+}
+
 /* --- The Glass Cards --- */
 .glass {
   background: var(--glass);
