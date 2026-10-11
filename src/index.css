@@ -39,7 +39,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* --- Layout Wrapper --- */
+
 .main-layout {
   display: flex;
   flex-direction: column;
@@ -53,14 +53,14 @@ body {
   color: var(--primary);
   text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
-  /* THIS SHIFTS ONLY THE TITLE UPWARDS */
+ 
   margin-top: -25px;
-  /* Pulls the title up closer to the top browser edge */
+ 
   margin-bottom: 45px;
-  /* Keeps a healthy, clean gap between title and cards */
+ 
 }
 
-/* --- The Glass Cards --- */
+
 .glass {
   background: var(--glass);
   backdrop-filter: blur(15px);
@@ -75,7 +75,7 @@ body {
   overflow: hidden;
 }
 
-/* --- Desktop override --- */
+
 @media (min-width: 769px) {
   .main-layout {
     flex-direction: row;
@@ -89,7 +89,7 @@ body {
   }
 }
 
-/* --- History List Scroll Container --- */
+
 .list {
   list-style-type: none;
   padding: 0;
@@ -99,7 +99,7 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Clean Custom Vertical List Scrollbar */
+
 .list::-webkit-scrollbar {
   width: 5px;
 }
@@ -118,7 +118,7 @@ body {
   background: var(--primary);
 }
 
-/* --- Row Layout Inside History --- */
+
 .list li {
   display: flex;
   justify-content: space-between;
@@ -139,7 +139,7 @@ body {
   border-left-color: var(--danger);
 }
 
-/* Individual Row Text Scroll Safeguards */
+
 .list li .tx-text {
   flex: 1;
   min-width: 0;
@@ -159,7 +159,7 @@ body {
   padding-bottom: 6px;
 }
 
-/* --- Balance & Big Number Handling --- */
+
 #balance {
   font-size: 24px;
   font-weight: bold;
@@ -178,7 +178,7 @@ body {
   padding-bottom: 6px;
 }
 
-/* Cross-Browser Thin Scrollbars Settings */
+
 #balance,
 .money.plus,
 .money.minus,
@@ -189,7 +189,7 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* --- Draggable Global Horizontal Scrollbars Settings --- */
+
 #balance::-webkit-scrollbar,
 .money.plus::-webkit-scrollbar,
 .money.minus::-webkit-scrollbar,
@@ -229,7 +229,7 @@ body {
   background-color: var(--primary);
 }
 
-/* --- Inputs & General Forms --- */
+
 input {
   width: 100%;
   padding: 10px;

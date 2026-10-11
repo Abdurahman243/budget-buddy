@@ -79,7 +79,7 @@ const App: React.FC = () => {
                                 placeholder="0.00"
                             />
                         </div>
-                        <button className="btn">Add Transaction</button> 
+                        <button className="btn">Add Transaction</button>
                     </form>
                 </div>
 
